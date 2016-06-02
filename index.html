@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <script src="https://use.fontawesome.com/94d6a48d61.js"></script>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+
+
+<body>
+
+<div class="wrapper">
+
+
+  <div id="video-container">
+      
+      <video id="video">
+        <source src="video/video.mp4" type="video/mp4">
+        <source src="video/video.ogg" type="video/ogg">
+      </video>
+
+      <div id="video-controls">
+
+        <div id="seek">
+            <progress id='progress-bar' min='0' max='100' value='0'></progress>
+            <input id="seekslider" type="range" min="0" max="100" value="0" step="1">
+        </div>
+
+        <section id="main-btns">
+            
+            <div id="play-pause">
+              <button id="play-btn"><i id="play" class="fa fa-play" aria-hidden="true"></i><i  id="pause" class="fa fa-pause" aria-hidden="true"></i></button>
+              <span class="time" id="curtime">00:00</span> / <span class="time" id="durtime">00:00</span>
+            </div>
+
+            <div id="other-btns">
+              <button id="volume"><i id="volume-on" class="fa fa-volume-up" aria-hidden="true"></i><i id="volume-off" class="fa fa-volume-off" aria-hidden="true"></i></button>
+              <input id="volumeslider" type="range" min="0" max="100" value="100" step="1">
+              <button id="cc" type="button"><i class="fa fa-cc" aria-hidden="true"></i></button>
+              <button id="fullscreen"><i class="fa fa-expand" aria-hidden="true"></i></button>
+            </div>
+
+        </section>
+    
+      </div> 
+
+  </div> 
+
+
+
+  <div id="caption-text">
+
+          <p>
+            <span>Now that we've looked at the architecture of the internet, let's see how you might</span>
+            <span>connect your personal devices to the internet inside your house. </span>
+            <span>Well there are many ways to connect to the internet, and </span>
+            <span>most often people connect wirelessly. </span>
+            <span>Let's look at an example of how you can connect to the internet. </span>
+          </p>
+          <p>
+            <span>If you live in a city or a town, you probably hav a coaxial cable for </span>
+            <span>cable Internet, or a phone line if you have DSL, running to the outside of </span>
+            <span>your house, that connects you to the Internet Service Provider, or ISP. </span>
+            <span>If you live far out in the country, you'll more likely have </span>
+            <span>a dish outside your house, connecting you wirelessly to your closest ISP, or </span>
+            <span>you might also use the telephone system. </span>
+          </p>
+          <p>
+            <span>Whether a wire comes straight from the ISP hookup outside your house, or </span>
+            <span>it travels over radio waves from your roof, </span>
+            <span>the first stop a wire will make once inside your house, is at your modem. </span>
+            <span>A modem is what connects the internet to your network at home. </span>
+            <span>A few common residential modems are DSL or</span>
+
+       </p>
+
+  </div> 
+
+</div> 
+
+  <script src="js/app.js"></script>
+
+
+</body>
+
+</html>
