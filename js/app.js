@@ -8,7 +8,6 @@ var seekSlider = document.getElementById("seekslider");
 var curTime = document.getElementById("curtime");
 var durTime = document.getElementById("durtime");
 var cc = document.getElementById("cc");
-var volumeSlider = document.getElementById("volumeslider");
 var captionTextDiv = document.getElementById("caption-text");
 var captionSpan = captionTextDiv.getElementsByTagName("span");
 var spanArr = [];
@@ -22,7 +21,6 @@ var vidControls = document.getElementById("video-controls");
 //****************************************
 
 video.addEventListener("loadedmetadata", loadContent);
-volumeslider.addEventListener("change", adjustVolume);
 playbtn.addEventListener("click", playPause);
 fullscreen.addEventListener("click", fullScreen);
 cc.addEventListener("click", captions);
@@ -32,6 +30,9 @@ seekSlider.addEventListener("change", seek);
 vidContainer.addEventListener("mouseenter", displayControls);
 vidContainer.addEventListener("mouseleave", displayControlsOff);
 video.addEventListener("click", playPause);
+video.addEventListener("ended", function() {
+	spanArr[15].classList.remove("highlight");
+});
 
 
 
@@ -62,30 +63,11 @@ function loadContent() {
 	track.addCue(new VTTCue(39.430, 42.190, 'you might also use the telephone system.'));
 	track.addCue(new VTTCue(42.350, 46.300, "Whether a wire comes straight from the ISP hookup outside your house, or"));
 	track.addCue(new VTTCue(46.300, 49.270, 'it travels over radio waves from your roof,'));
-	track.addCue(new VTTCue(49.270, 55.760, 'the first stop a wire will make once inside your house, is at your modem.'));
+	track.addCue(new VTTCue(49.270, 53.760, 'the first stop a wire will make once inside your house, is at your modem.'));
 	track.addCue(new VTTCue(53.760, 57.780, 'A modem is what connects the internet to your network at home.'));
-	track.addCue(new VTTCue(57.780, 1.00, 'A few common residential modems are DSL or'));
+	track.addCue(new VTTCue(57.780, 59.999, 'A few common residential modems are DSL or'));
 	} 
-	//Check for IE
-	else if (window.TextTrackCue) {
-	track.addCue(new TextTrackCue(0.240, 4.130, "Now that we've looked at the architecture of the internet. let's see how you might"));
-	track.addCue(new TextTrackCue(4.130, 7.535, 'connect your personal devices to the internet inside your house.'));
-	track.addCue(new TextTrackCue(7.535, 11.270, 'Well there are many ways to connect to the internet, and'));
-	track.addCue(new TextTrackCue(11.270, 13.960, 'most often people connect wirelessly.'));
-	track.addCue(new TextTrackCue(13.960, 17.940, "Let's look at an example of how you can connect to the internet"));
-	track.addCue(new TextTrackCue(17.940, 22.370, 'If you live in a city or a town, you probably have a coaxial cable for'));
-	track.addCue(new TextTrackCue(22.370, 26.880, 'cable Internet, or a phone line if you have DSL, running to the outside of'));
-	track.addCue(new TextTrackCue(26.880, 30.920, 'your house, that connects you to the Internet Service Provider, or ISP.'));
-	track.addCue(new TextTrackCue(32.100, 34.730, "If you live far out in the country. you'll more likely have"));
-	track.addCue(new TextTrackCue(34.730, 39.430, 'a dish outside your house, connecting you wirelessly to your closest ISP, or'));
-	track.addCue(new TextTrackCue(39.430, 42.190, 'you might also use the telephone system.'));
-	track.addCue(new TextTrackCue(42.350, 46.300, "Whether a wire comes straight from the ISP hookup outside your house, or"));
-	track.addCue(new TextTrackCue(46.300, 49.270, 'it travels over radio waves from your roof,'));
-	track.addCue(new TextTrackCue(49.270, 55.760, 'the first stop a wire will make once inside your house, is at your modem.'));
-	track.addCue(new TextTrackCue(53.760, 57.780, 'A modem is what connects the internet to your network at home.'));
-	track.addCue(new TextTrackCue(57.780, 1.00, "A few common residential modems are DSL or"));
-	}
-
+	
 	//Add span elements to array
 	//loop thru cues and add event listerners
 	for(i = 0; i < captionSpan.length; i++) {
@@ -102,21 +84,11 @@ function loadContent() {
 function addEventHandler(elem, elem2, index) {
     elem.addEventListener('enter', function() {
     	elem2.classList.add("highlight");
-    	console.log(elem2);
-    	console.log(index);
     });
 
     elem.addEventListener('exit', function() {
     	elem2.classList.remove("highlight");
     });
-}
-
-
-
-
-function adjustVolume() {
-	video.volume = volumeSlider.value / 100;
-	// if video volume is 0 muted it and display mute icon
 }
 
 
@@ -164,12 +136,10 @@ function mute() {
 
 	if(video.muted) {
 		video.muted = false;
-		volumeSlider.value = 100;
 		volumeOn.style.display = 'block';
 		volumeOff.style.display = 'none';
 	} else {
 		video.muted = true;
-		volumeSlider.value = 0;
 		volumeOn.style.display = 'none';
 		volumeOff.style.display = 'block';
 	}
@@ -195,16 +165,120 @@ function seekUpdate() {
 
 	curTime.innerText = curMins +":" + curSecs;
 	durTime.innerText = durMins +":" + durSecs;
+
+
+	if(window.mozInnerScreenY) {
+
+
+		if( video.currentTime < track.cues[0].endTime) {
+			spanArr[0].classList.add("highlight");
+		} else {
+			spanArr[0].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[1].startTime && video.currentTime < track.cues[1].endTime) {
+			spanArr[1].classList.add("highlight");
+		} else {
+			spanArr[1].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[2].startTime && video.currentTime < track.cues[2].endTime) {
+			spanArr[2].classList.add("highlight");
+		} else {
+			spanArr[2].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[3].startTime && video.currentTime < track.cues[3].endTime) {
+			spanArr[3].classList.add("highlight");
+		} else {
+			spanArr[3].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[4].startTime && video.currentTime < track.cues[4].endTime) {
+			spanArr[4].classList.add("highlight");
+		} else {
+			spanArr[4].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[5].startTime && video.currentTime < track.cues[5].endTime) {
+			spanArr[5].classList.add("highlight");
+		} else {
+			spanArr[5].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[6].startTime && video.currentTime < track.cues[6].endTime) {
+			spanArr[6].classList.add("highlight");
+		} else {
+			spanArr[6].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[7].startTime && video.currentTime < track.cues[7].endTime) {
+			spanArr[7].classList.add("highlight");
+		} else {
+			spanArr[7].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[8].startTime && video.currentTime < track.cues[8].endTime) {
+			spanArr[8].classList.add("highlight");
+		} else {
+			spanArr[8].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[9].startTime && video.currentTime < track.cues[9].endTime) {
+			spanArr[9].classList.add("highlight");
+		} else {
+			spanArr[9].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[10].startTime && video.currentTime < track.cues[10].endTime) {
+			spanArr[10].classList.add("highlight");
+		} else {
+			spanArr[10].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[11].startTime && video.currentTime < track.cues[11].endTime) {
+			spanArr[11].classList.add("highlight");
+		} else {
+			spanArr[11].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[12].startTime && video.currentTime < track.cues[12].endTime) {
+			spanArr[12].classList.add("highlight");
+		} else {
+			spanArr[12].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[13].startTime && video.currentTime < track.cues[13].endTime) {
+			spanArr[13].classList.add("highlight");
+		} else {
+			spanArr[13].classList.remove("highlight");
+		}
+
+		if( video.currentTime > track.cues[14].startTime && video.currentTime < track.cues[14].endTime) {
+			spanArr[14].classList.add("highlight");
+		} else {
+			spanArr[14].classList.remove("highlight");
+		}
+
+		if(video.currentTime > track.cues[15].startTime && video.currentTime < track.cues[15].endTime) {
+			spanArr[15].classList.add("highlight");
+		}
+
+	}
+
 }
+
 
 function seek() {
 	var seekTo = video.duration * (seekSlider.value / 100);
 	video.currentTime = seekTo;
 }
 
+
 function displayControls() {
 	mainControls.style.display = "flex";
 }
+
 
 function displayControlsOff() {
 	mainControls.style.display = "none";

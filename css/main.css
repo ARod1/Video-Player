@@ -27,7 +27,7 @@ progress {
 }
 
 progress[value] {
-  color: red;
+  color: yellow;
 }
 
 
@@ -38,11 +38,11 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-    background: red;
+    background: yellow;
 }
 
 progress::-moz-progress-bar {
-    background: red;
+    background: yellow;
 }
 
 
@@ -92,9 +92,6 @@ progress::-moz-progress-bar {
   position: absolute;
 }
 
-#volumeslider {
-  display: none;
-}
 
 #pause,
 #volume-off {
@@ -129,14 +126,6 @@ input[id=seekslider]::-moz-range-track {
 }
 
 
-input[id=seekslider]::-ms-track {
-  width: 100%;
-  cursor: pointer;
-  background: transparent; 
-  border-color: transparent;
-  color: transparent;
-}
-
 /*Chrome*/
 input[id=seekslider]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -156,14 +145,7 @@ input[id=seekslider]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/*IE */
-input[id=seekslider]::-ms-thumb {
-   border: none;
-   height: 10px;
-   width: 10px;
-   background: transparent;
-   cursor: pointer;
-}
+
 
 
 @media (min-width: 768px) {
